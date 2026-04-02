@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Track Your Report - Tzaneen Connect</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            border-radius: 20px 20px 0 0;
+        }
+        
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 5px;
+        }
+        
+        .content {
+            background: white;
+            border-radius: 0 0 20px 20px;
+            padding: 30px;
+        }
+        
+        .search-box {
+            background: #f0f2f5;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        
+        .search-box input {
+            width: 70%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+        
+        .search-box button {
+            width: 25%;
+            padding: 12px;
+            background: #1e3c72;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        
+        .search-box button:hover {
+            background: #2a5298;
+        }
+        
+        .report-card {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 20px;
+            border-left: 5px solid #1e3c72;
+        }
+        
+        .reference {
+            background: #e3f2fd;
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .reference-number {
+            font-size: 24px;
+            font-weight: bold;
+            color: #1e3c72;
+            letter-spacing: 2px;
+        }
+        
+        .status {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        
+        .status-pending { background: #FFF3E0; color: #F57C00; }
+        .status-assigned { background: #E3F2FD; color: #1976D2; }
+        .status-in_progress { background: #E8F5E9; color: #388E3C; }
+        .status-resolved { background: #C8E6C9; color: #2E7D32; }
+        .status-rejected { background: #FFEBEE; color: #D32F2F; }
+        
+        .info-row {
+            display: flex;
+            padding: 12px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .info-label {
+            font-weight: bold;
+            width: 120px;
+            color: #555;
+        }
+        
+        .info-value {
+            flex: 1;
+            color: #333;
+        }
+        
+        .back-links {
+            margin-top: 30px;
+            text-align: center;
+        }
+        
+        .back-links a {
+            display: inline-block;
+            margin: 0 10px;
+            padding: 10px 20px;
+            background: #1e3c72;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+        }
+        
+        .back-links a:hover {
+            background: #2a5298;
+        }
+        
+        .error-message {
+            background: #FFEBEE;
+            color: #D32F2F;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .help-text {
+            color: #666;
+            font-size: 14px;
+            margin-top: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Greater Tzaneen Municipality</h1>
+            <p>Track Your Service Request</p>
+        </div>
+        
+        <div class="content">
+            <div class="search-box">
+                <form method="post">
+                    {% csrf_token %}
+                    <input type="text" name="reference_number" placeholder="Enter your reference number (e.g., TZN-XXXXXXX)" required>
+                    <button type="submit"> Track Report</button>
+                </form>
+                <div class="help-text">
+                    Your reference number was provided after submitting your report (e.g., TZN-8F3E9A2B)
+                </div>
+            </div>
+            
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="error-message">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+            
+            {% if report %}
+            <div class="report-card">
+                <div class="reference">
+                    <strong>Reference Number:</strong>
+                    <div class="reference-number">{{ report.reference_number }}</div>
+                </div>
+                
+                <div class="info-row">
+                    <div class="info-label">Status:</div>
+                    <div class="info-value">
+                        <span class="status status-{{ report.status }}">
+                            {{ report.get_status_display }}
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="info-row">
+                    <div class="info-label">Issue Type:</div>
+                    <div class="info-value">{{ report.get_issue_type_display }}</div>
+                </div>
+                
+                <div class="info-row">
+                    <div class="info-label">Description:</div>
+                    <div class="info-value">{{ report.description }}</div>
+                </div>
+                
+                <div class="info-row">
+                    <div class="info-label">Location:</div>
+                    <div class="info-value">{{ report.location }}</div>
+                </div>
+                
+                <div class="info-row">
+                    <div class="info-label">Reported On:</div>
+                    <div class="info-value">{{ report.created_at|date:"F j, Y \a\t g:i A" }}</div>
+                </div>
+                
+                <div class="info-row">
+                    <div class="info-label">Last Updated:</div>
+                    <div class="info-value">{{ report.updated_at|date:"F j, Y \a\t g:i A" }}</div>
+                </div>
+            </div>
+            {% endif %}
+            
+            <div class="back-links">
+                <a href="/">Report New Issue</a>
+                <a href="/alerts/"> View Community Alerts</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

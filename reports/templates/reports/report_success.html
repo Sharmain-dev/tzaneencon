@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report Submitted - Tzaneen Connect</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 550px;
+            background: white;
+            border-radius: 20px;
+            text-align: center;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        .success-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+        }
+        
+        h1 {
+            color: #2e7d32;
+            margin-bottom: 15px;
+            font-size: 28px;
+        }
+        
+        .reference-box {
+            background: #e8f5e9;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 25px 0;
+            border: 2px solid #4caf50;
+        }
+        
+        .reference-label {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 8px;
+        }
+        
+        .reference-number {
+            font-size: 28px;
+            font-weight: bold;
+            color: #1e3c72;
+            letter-spacing: 2px;
+            font-family: monospace;
+            word-break: break-all;
+        }
+        
+        .message {
+            color: #555;
+            margin: 20px 0;
+            line-height: 1.6;
+        }
+        
+        .status-box {
+            background: #fff3e0;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 25px;
+        }
+        
+        .button {
+            display: inline-block;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: transform 0.2s;
+        }
+        
+        .button:hover {
+            transform: translateY(-2px);
+        }
+        
+        .button-track {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        }
+        
+        .button-alerts {
+            background: linear-gradient(135deg, #ff9800 0%, #ffc107 100%);
+        }
+        
+        .warning {
+            background: #fff3e0;
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #e65100;
+        }
+        
+        .warning span {
+            font-weight: bold;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="success-icon">
+            
+        </div>
+        
+        <h1>Report Submitted Successfully!</h1>
+        
+        <div class="reference-box">
+            <div class="reference-label">Your Reference Number:</div>
+            <div class="reference-number">{{ report.reference_number }}</div>
+        </div>
+        
+        <div class="message">
+            Thank you for reporting this issue to the Greater Tzaneen Municipality.
+            <br><br>
+            <strong>Please save this reference number!</strong> You will need it to track the status of your report.
+        </div>
+        
+        <div class="status-box">
+            <strong>Current Status:</strong> {{ report.get_status_display }}
+        </div>
+        
+        <div class="button-group">
+            <a href="/" class="button">Report Another Issue</a>
+            <a href="/track/" class="button button-track"> Track This Report</a>
+            <a href="/alerts/" class="button button-alerts"> View Alerts</a>
+        </div>
+        
+        <div class="warning">
+            <span> Important:</span> 
+        </div>
+    </div>
+</body>
+</html>

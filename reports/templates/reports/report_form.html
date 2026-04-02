@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Report an Issue - Tzaneen Connect</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #667eea;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+        }
+        h1 {
+            color: #1e3c72;
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        button {
+            background: #1e3c72;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+        .alert-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #1e3c72;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1> Greater Tzaneen Municipality</h1>
+        <h2 style="text-align: center;">Report an Issue</h2>
+        
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label>Issue Type:</label>
+                {{ form.issue_type }}
+            </div>
+            
+            <div class="form-group">
+                <label>Description:</label>
+                {{ form.description }}
+            </div>
+            
+            <div class="form-group">
+                <label>Photo (optional):</label>
+                {{ form.photo }}
+            </div>
+            
+            <div class="form-group">
+                <label>Location:</label>
+                {{ form.location }}
+            </div>
+            
+            <button type="submit">Submit Report</button>
+        </form>
+        
+        <a href="/alerts/" class="alert-link"> View Community Alerts</a>
+
+        <a href="/track/" style="display: inline-block; margin: 10px; padding: 10px 20px; background: #28a745; color: white; text-decoration: none; border-radius: 8px;">Track Your Report</a>
+    </div>
+</body>
+</html>
