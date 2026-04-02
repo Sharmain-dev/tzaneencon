@@ -6,7 +6,7 @@ def alert_list(request):
     active_alerts = Alert.objects.filter(is_active=True).order_by('-created_at')
     print(f"Number of alerts found: {active_alerts.count()}")  # Debug line
     
-    # Try to find the template
+    
     from django.template import loader
     try:
         template = loader.get_template('alerts/alert_list.html')
@@ -15,4 +15,3 @@ def alert_list(request):
         print(f"Template error: {e}")
     
     return render(request, 'alerts/alert_list.html', {'alerts': active_alerts})
-    
